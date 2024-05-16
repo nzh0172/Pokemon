@@ -53,9 +53,13 @@ int main() {
         if (userChoice == 1) {
             playerDamage = calculateDamage(playerPokemon.attack);
         }
-        else {
+        else if (userChoice == 2) {
             playerDamage = calculateDamage(playerPokemon.attack * 2); // Double damage for special attack
         }
+        else if (userChoice == 3) {
+            cout << "You flee!" << endl;
+        }
+
         opponentPokemon.hp -= playerDamage;
         cout << "You attacked the opponent for " << playerDamage << " damage." << endl;
 
@@ -129,10 +133,17 @@ int getUserAttackChoice() {
         if (choice == 1) {
             cout << "-> Normal Attack" << endl;
             cout << "   Special Attack (Double Damage)" << endl;
+            cout << "   Run" << endl;
         }
-        else {
+        else if (choice == 2) {
             cout << "   Normal Attack" << endl;
             cout << "-> Special Attack (Double Damage)" << endl;
+            cout << "   Run" << endl;
+        }
+        else if (choice == 3) {
+            cout << "   Normal Attack" << endl;
+            cout << "   Special Attack (Double Damage)" << endl;
+            cout << "-> Run"<< endl;
         }
         // Wait for arrow key input
         key = _getch();
@@ -142,7 +153,7 @@ int getUserAttackChoice() {
                 choice--;
             break;
         case 80: // Down arrow key
-            if (choice < 2)
+            if (choice < 3)
                 choice++;
             break;
         case 13: // Enter key
