@@ -3,38 +3,9 @@
 #include <ctime>
 #include <conio.h>
 #include <windows.h>
+#include "pokemon.h"
 
 using namespace std;
-
-// Define a struct for a Pokemon
-class Pokemon {
-public:
-    string name;
-    int hp;
-    int attack;
-    void initializePokemon(string name, int hp, int attack) {
-        this->name = name;
-        this->hp = hp;
-        this->attack = attack;
-    }
-    void displayPokemon(Pokemon ally, Pokemon enemy) {
-        cout << "Your Pokemon\t\tOpponent's Pokemon" << endl;
-        cout << "Name: " << ally.name << "\t\tName:" << enemy.name << endl;
-        cout << "HP: " << ally.hp << "\t\t\tHP:" << enemy.hp << endl;
-        cout << "Attack: " << ally.attack << "\t\tAttack:" << enemy.attack << endl;
-        cout << "_____________________________________________" << endl;
-    }
-    int calculateDamage(int attack) {
-        return rand() % attack + 1;
-    }
-    int getHP() {
-        return hp;
-    }
-    int getAttack() {
-        return attack;
-    }
-    
-};
 
 int getUserAttackChoice();
 
@@ -48,6 +19,7 @@ void gotoxy(int x, int y) {
 // Create two Pokemon
 Pokemon ally;
 Pokemon enemy;
+
 int main() {
     // Seed the random number generator
     srand(time(0));
