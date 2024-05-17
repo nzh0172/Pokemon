@@ -1,4 +1,4 @@
-C++ Project: Pokemon (Text-based RPG)
+# C++ Project: Pokemon (Text-based RPG)
 
 This project is a simple implementation of a very popular RPG(Role-playing game) called Pokemon where your monsters known as Pokemon(Pocket Monster) battle wild Pokemons as a Pokemon trainer through turn-based combat. Here only the battle gameplay is implemented with C++ concepts that we’ve learned so far in this course.
 
