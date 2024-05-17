@@ -7,16 +7,35 @@
 using namespace std;
 
 // Define a struct for a Pokemon
-struct Pokemon {
+class Pokemon {
+public:
     string name;
     int hp;
     int attack;
+    void initializePokemon(string name, int hp, int attack) {
+        this->name = name;
+        this->hp = hp;
+        this->attack = attack;
+    }
+    void displayPokemon(Pokemon ally, Pokemon enemy) {
+        cout << "Your Pokemon\t\tOpponent's Pokemon" << endl;
+        cout << "Name: " << ally.name << "\t\tName:" << enemy.name << endl;
+        cout << "HP: " << ally.hp << "\t\t\tHP:" << enemy.hp << endl;
+        cout << "Attack: " << ally.attack << "\t\tAttack:" << enemy.attack << endl;
+        cout << "_____________________________________________" << endl;
+    }
+    int calculateDamage(int attack) {
+        return rand() % attack + 1;
+    }
+    int getHP() {
+        return hp;
+    }
+    int getAttack() {
+        return attack;
+    }
+    
 };
 
-// Function prototypes
-void initializePokemon(Pokemon& pokemon, string name, int hp, int attack);
-void displayPokemon(const Pokemon& pokemon);
-int calculateDamage(int attack);
 int getUserAttackChoice();
 
 // Function to set cursor position
@@ -27,64 +46,56 @@ void gotoxy(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 // Create two Pokemon
-Pokemon playerPokemon;
-Pokemon opponentPokemon;
+Pokemon ally;
+Pokemon enemy;
 int main() {
     // Seed the random number generator
     srand(time(0));
 
-
-
     // Initialize Pokemon
-    initializePokemon(playerPokemon, "Pikachu", 100, 20);
-    initializePokemon(opponentPokemon, "Charmander", 100, 15);
+    ally.initializePokemon("Pikachu", 100, 20);
+    enemy.initializePokemon("Charmander", 100, 15);
+
 
     // Display initial Pokemon stats
-    cout << "Your Pokemon:" << endl;
-    displayPokemon(playerPokemon);
-    cout << "\nOpponent's Pokemon:" << endl;
-    displayPokemon(opponentPokemon);
+    ally.displayPokemon(ally, enemy);
 
     // Start the battle
-    while (playerPokemon.hp > 0 && opponentPokemon.hp > 0) {
-        // Player's turn
+    while (ally.hp > 0 && enemy.hp > 0) {
+        // ally's turn
         int userChoice = getUserAttackChoice();
-        int playerDamage;
+        int allyDamage;
         if (userChoice == 1) {
-            playerDamage = calculateDamage(playerPokemon.attack);
+            allyDamage = ally.calculateDamage(ally.attack);
         }
         else if (userChoice == 2) {
-            playerDamage = calculateDamage(playerPokemon.attack * 2); // Double damage for special attack
+            allyDamage = ally.calculateDamage(ally.attack * 2); // Double damage for special attack
         }
         else if (userChoice == 3) {
             cout << "You flee!" << endl;
         }
 
-        opponentPokemon.hp -= playerDamage;
-        cout << "You attacked the opponent for " << playerDamage << " damage." << endl;
+        enemy.hp -= allyDamage;
+        cout << "_____________________________________________" << endl;
+        cout << "You attacked the opponent for " << allyDamage << " damage." << endl;
 
         // Check if opponent fainted
-        if (opponentPokemon.hp <= 0) {
+        if (enemy.hp <= 0) {
             cout << "Opponent's Pokemon fainted! You win!" << endl;
             break;
         }
 
         // Opponent's turn
-        int opponentDamage = calculateDamage(opponentPokemon.attack);
-        playerPokemon.hp -= opponentDamage;
+        int opponentDamage = enemy.calculateDamage(enemy.attack);
+        ally.hp -= opponentDamage;
         cout << "Opponent attacked you for " << opponentDamage << " damage." << endl;
 
-        // Check if player fainted
-        if (playerPokemon.hp <= 0) {
+        // Check if ally fainted
+        if (ally.hp <= 0) {
             cout << "Your Pokemon fainted! You lose!" << endl;
             break;
         }
 
-        // Display updated Pokemon stats
-        cout << "\nYour Pokemon:" << endl;
-        displayPokemon(playerPokemon);
-        cout << "\nOpponent's Pokemon:" << endl;
-        displayPokemon(opponentPokemon);
 
         // Pause before next round
         cout << "\nPress Enter to continue...";
@@ -94,25 +105,8 @@ int main() {
     return 0;
 }
 
-// Function to initialize a Pokemon
-void initializePokemon(Pokemon& pokemon, string name, int hp, int attack) {
-    pokemon.name = name;
-    pokemon.hp = hp;
-    pokemon.attack = attack;
-}
 
-// Function to display Pokemon stats
-void displayPokemon(const Pokemon& pokemon) {
-    cout << "Name: " << pokemon.name << endl;
-    cout << "HP: " << pokemon.hp << endl;
-    cout << "Attack: " << pokemon.attack << endl;
-}
 
-// Function to calculate damage
-int calculateDamage(int attack) {
-    // Generate a random number between 1 and attack
-    return rand() % attack + 1;
-}
 
 // Function to get user's attack choice using arrow keys
 int getUserAttackChoice() {
@@ -122,10 +116,7 @@ int getUserAttackChoice() {
     while (!selected) {
         system("cls"); // Clear screen
         
-        displayPokemon(playerPokemon);
-        cout << endl;
-        displayPokemon(opponentPokemon);
-        cout << endl;
+        ally.displayPokemon(ally, enemy);
 
 
         cout << "Choose your attack:" << endl;
