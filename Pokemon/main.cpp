@@ -19,12 +19,14 @@ void gotoxy(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 // Create two Pokemon
+
+
 Pokemon ally;
 Pokemon enemy;
 
 int main() {
     // Seed the random number generator
-    srand(time(0));
+    srand((unsigned)time(NULL));
 
     // Initialize Pokemon
     ally.initializePokemon("Pikachu", 100, 20);
@@ -38,18 +40,23 @@ int main() {
     while (ally.hp > 0 && enemy.hp > 0) {
         // ally's turn
         int userChoice = getUserAttackChoice();
-        int allyDamage;
+        int allyDamage = 0;
         if (userChoice == 1) {
             allyDamage = ally.calculateDamage(ally.attack);
+            enemy.hp -= allyDamage;
         }
         else if (userChoice == 2) {
             allyDamage = ally.calculateDamage(ally.attack * 2); // Double damage for special attack
+            enemy.hp -= allyDamage;
         }
         else if (userChoice == 3) {
+            ally.catchPokemon(enemy);
+        }
+        else if (userChoice == 4) {
             cout << "You flee!" << endl;
         }
 
-        enemy.hp -= allyDamage;
+        
         cout << "_____________________________________________" << endl;
         cout << "You attacked the opponent for " << allyDamage << " damage." << endl;
 
@@ -98,17 +105,26 @@ int getUserAttackChoice() {
         if (choice == 1) {
             cout << "-> Normal Attack" << endl;
             cout << "   Special Attack (Double Damage)" << endl;
+            cout << "   Catch" << endl;
             cout << "   Run" << endl;
         }
         else if (choice == 2) {
             cout << "   Normal Attack" << endl;
             cout << "-> Special Attack (Double Damage)" << endl;
+            cout << "   Catch" << endl;
             cout << "   Run" << endl;
         }
         else if (choice == 3) {
             cout << "   Normal Attack" << endl;
             cout << "   Special Attack (Double Damage)" << endl;
-            cout << "-> Run"<< endl;
+            cout << "-> Catch" << endl;
+            cout << "   Run"<< endl;
+        }
+        else if (choice == 4) {
+            cout << "   Normal Attack" << endl;
+            cout << "   Special Attack (Double Damage)" << endl;
+            cout << "   Catch" << endl;
+            cout << "-> Run" << endl;
         }
         // Wait for arrow key input
         key = _getch();
@@ -118,7 +134,7 @@ int getUserAttackChoice() {
                 choice--;
             break;
         case 80: // Down arrow key
-            if (choice < 3)
+            if (choice < 4)
                 choice++;
             break;
         case 13: // Enter key

@@ -127,10 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="chance.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pokemon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="chance.h" />
     <ClInclude Include="pokemon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
