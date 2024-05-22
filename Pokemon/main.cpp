@@ -4,6 +4,7 @@
 #include <conio.h>
 #include <windows.h>
 #include "pokemon.h"
+#include "chance.h"
 
 using namespace std;
 
@@ -32,6 +33,7 @@ int main() {
     ally.initializePokemon("Pikachu", 100, 20);
     enemy.initializePokemon("Charmander", 100, 15);
 
+    
 
     // Display initial Pokemon stats
     ally.displayPokemon(ally, enemy);
@@ -41,21 +43,33 @@ int main() {
         // ally's turn
         int userChoice = getUserAttackChoice();
         int allyDamage = 0;
+        int opponentDamage = enemy.calculateDamage(enemy.attack);
+        
+
         if (userChoice == 1) {
             allyDamage = ally.calculateDamage(ally.attack);
             enemy.hp -= allyDamage;
+            ally.hp -= opponentDamage;
         }
         else if (userChoice == 2) {
             allyDamage = ally.calculateDamage(ally.attack * 2); // Double damage for special attack
             enemy.hp -= allyDamage;
+            ally.hp -= opponentDamage;
         }
         else if (userChoice == 3) {
             ally.catchPokemon(enemy);
+            if (enemy.isCaptured == true) {
+                cout << "\nPress Enter to exit...";
+                cin.ignore();
+                break;
+            }
         }
         else if (userChoice == 4) {
             cout << "You flee!" << endl;
+            cout << "\nPress Enter to exit...";
+            cin.ignore();
+            break;
         }
-
         
         cout << "_____________________________________________" << endl;
         cout << "You attacked the opponent for " << allyDamage << " damage." << endl;
@@ -67,8 +81,6 @@ int main() {
         }
 
         // Opponent's turn
-        int opponentDamage = enemy.calculateDamage(enemy.attack);
-        ally.hp -= opponentDamage;
         cout << "Opponent attacked you for " << opponentDamage << " damage." << endl;
 
         // Check if ally fainted
