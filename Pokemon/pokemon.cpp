@@ -31,10 +31,10 @@ double Pokemon::winRate_catch(Pokemon& enemy) {
     if (enemy.hp <= 100 && enemy.hp > 80) {
         winRate = 0.3;
     }
-    else if (enemy.hp < 80 && enemy.hp > 40) {
+    else if (enemy.hp <= 80 && enemy.hp > 40) {
         winRate = 0.5;
     }
-    else if (enemy.hp < 40 && enemy.hp >= 0) {
+    else if (enemy.hp <= 40 && enemy.hp >= 0) {
         winRate = 0.8;
     }
     return winRate; //0 if fail, 1 if successful
@@ -48,12 +48,12 @@ void Pokemon::catchPokemon(Pokemon &enemy)
     cout << "winrate: " << winRate_catch(enemy) << endl;
     double success = randomInRange(0, 5);
     cout << success << endl;
-    if (winRate_catch(enemy) <= 0.5 && success < 2) {
+    if (winRate_catch(enemy) <= 0.5 && success <= 2) {
         cout << "Pokemon has been captured!" << endl;
         enemy.isCaptured = true;
     }
     //gives guaranteed catch
-    else if (winRate_catch(enemy) >= 0.8 && success >= 3 && success <= 5 ) {
+    else if (winRate_catch(enemy) >= 0.8 && success > 1) {
         cout << "Pokemon has been captured!" << endl;
         enemy.isCaptured = true;
     }
