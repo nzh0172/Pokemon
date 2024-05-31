@@ -10,7 +10,7 @@ using namespace std;
 
 //test
 
-int getUserAttackChoice(Pokemon&);
+int getUserAttackChoice();
 
 // Create two Pokemon
 Pokemon ally;
@@ -30,19 +30,20 @@ int main() {
     // Start the battle
     while (ally.hp > 0 && enemy.hp > 0) {
         // ally's turn
-        int userChoice = getUserAttackChoice(enemy);
+        int userChoice = getUserAttackChoice();
         int allyDamage = 0;
         int opponentDamage = enemy.calculateDamage(enemy.attack);
+        int enemyDodge = randomInRange(0, 5);
 
         if (userChoice == 1) {
             allyDamage = ally.calculateDamage(ally.attack);
-            enemy.hp -= allyDamage;
-            ally.hp -= opponentDamage;
+            enemy -= allyDamage;
+            ally -= opponentDamage;
         }
         else if (userChoice == 2) {
             allyDamage = ally.calculateDamage(ally.attack * 2); // Double damage for special attack
-            enemy.hp -= allyDamage;
-            ally.hp -= opponentDamage;
+            enemy -= allyDamage;
+            ally -= opponentDamage;
         }
         else if (userChoice == 3) {
             ally.catchPokemon(enemy);
@@ -90,7 +91,7 @@ int main() {
 
 
 // Function to get user's attack choice using arrow keys
-int getUserAttackChoice(Pokemon& enemy) {
+int getUserAttackChoice() {
     int choice = 1; // Default choice
     int key;
     bool selected = false;

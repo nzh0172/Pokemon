@@ -29,7 +29,7 @@ void Pokemon::displayPokemon(Pokemon ally, Pokemon enemy) {
 }
 double Pokemon::winRate_catch(Pokemon& enemy) {
     if (enemy.hp <= 100 && enemy.hp > 80) {
-        winRate = 0.3;
+        winRate = 0.2;
     }
     else if (enemy.hp < 80 && enemy.hp > 40) {
         winRate = 0.5;
@@ -62,10 +62,9 @@ void Pokemon::catchPokemon(Pokemon &enemy)
         enemy.isCaptured = false;
     }
 }
-int Pokemon::getHP() {
-    return hp;
-}
-int Pokemon::getAttack() {
-    return attack;
+void Pokemon::operator -=(int damage) {
+    hp -= damage;
+    if (hp < 0)
+        hp = 0;
 }
 

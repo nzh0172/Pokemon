@@ -23,9 +23,7 @@ public:
     int calculateDamage(int attack);
 
     void catchPokemon(Pokemon &enemy);
+    void operator -= (int damage);
 
-
-    int getHP();
-    int getAttack();
 
 };
