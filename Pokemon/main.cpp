@@ -33,19 +33,8 @@ int main() {
         int opponentDamage = enemy.calculateDamage(enemy.attack);
 
         int enemyDodge = randomInRange(0, 20);
-
-        int* p = new int[3];
-        int i = 0;
-
-        if (enemyDodge > 10) {
+        if (enemyDodge > 10)
             enemy.isDodging = true;
-            p[i] = enemy.isDodging;
-            for (int j = 0; j < 3; j++) {
-                if (p[j] == 0) {
-                    cout << "3 times now" << endl;
-                }
-            }
-        }
         else
             enemy.isDodging = false;
 
