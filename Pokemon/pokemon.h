@@ -13,13 +13,14 @@ public:
     int hp;
     int attack;
     bool isCaptured;
+    bool isDodging;
     double winRate;
 
     Pokemon();
 
     void initializePokemon(std::string pname, int php, int pattack);
     void displayPokemon(Pokemon ally, Pokemon enemy);
-    double winRate_catch(Pokemon& enemy);
+    double winRate_catch();
     int calculateDamage(int attack);
 
     void catchPokemon(Pokemon &enemy);

@@ -13,6 +13,7 @@ Pokemon::Pokemon()
     attack = 0;
     isCaptured = false;
     winRate = 0;
+    isDodging = false;
 }
 
 void Pokemon::initializePokemon(std::string pname, int php, int pattack) {
@@ -27,33 +28,35 @@ void Pokemon::displayPokemon(Pokemon ally, Pokemon enemy) {
     cout << "Attack: " << ally.attack << "\t\tAttack:" << enemy.attack << endl;
     cout << "_____________________________________________" << endl;
 }
-double Pokemon::winRate_catch(Pokemon& enemy) {
-    if (enemy.hp <= 100 && enemy.hp > 80) {
-        winRate = 0.2;
+double Pokemon::winRate_catch() {
+    if (hp > 80) {
+        return 0.2;
     }
-    else if (enemy.hp <= 80 && enemy.hp > 40) {
-        winRate = 0.5;
+    else if (hp > 40) {
+        return 0.5;
     }
-    else if (enemy.hp <= 40 && enemy.hp >= 0) {
-        winRate = 0.8;
+    else if (hp >= 0) {
+        return 0.8;
     }
-    return winRate; //0 if fail, 1 if successful
+    return 0.0; //0 if fail, 1 if successful
 }
+
+
 
 int Pokemon::calculateDamage(int attack) {
     return rand() % attack + 1;
 }
 void Pokemon::catchPokemon(Pokemon &enemy)
 {
-    cout << "winrate: " << winRate_catch(enemy) << endl;
+    //cout << "winrate: " << winRate_catch() << endl;
     double success = randomInRange(0, 5);
-    cout << success << endl;
-    if (winRate_catch(enemy) <= 0.5 && success <= 2) {
+    //cout << success << endl;
+    if (winRate_catch() <= 0.5 && success <= 2) {
         cout << "Pokemon has been captured!" << endl;
         enemy.isCaptured = true;
     }
     //gives guaranteed catch
-    else if (winRate_catch(enemy) >= 0.8 && success > 1) {
+    else if (winRate_catch() >= 0.8 && success > 1) {
         cout << "Pokemon has been captured!" << endl;
         enemy.isCaptured = true;
     }

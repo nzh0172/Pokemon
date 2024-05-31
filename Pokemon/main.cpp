@@ -8,8 +8,6 @@
 
 using namespace std;
 
-//test
-
 int getUserAttackChoice();
 
 // Create two Pokemon
@@ -22,7 +20,7 @@ int main() {
 
     // Initialize Pokemon
     ally.initializePokemon("Pikachu", 100, 20);
-    enemy.initializePokemon("Charmander", 100, 15);
+    enemy.initializePokemon("Charmander", 100, 22);
 
     // Display initial Pokemon stats
     ally.displayPokemon(ally, enemy);
@@ -33,17 +31,26 @@ int main() {
         int userChoice = getUserAttackChoice();
         int allyDamage = 0;
         int opponentDamage = enemy.calculateDamage(enemy.attack);
-        int enemyDodge = randomInRange(0, 5);
+
+        int enemyDodge = randomInRange(0, 20);
+        if (enemyDodge > 10)
+            enemy.isDodging = true;
+        else
+            enemy.isDodging = false;
 
         if (userChoice == 1) {
             allyDamage = ally.calculateDamage(ally.attack);
-            enemy -= allyDamage;
-            ally -= opponentDamage;
+            if (enemy.isDodging == false) {
+                enemy -= allyDamage;
+                ally -= opponentDamage;
+            }
         }
         else if (userChoice == 2) {
             allyDamage = ally.calculateDamage(ally.attack * 2); // Double damage for special attack
-            enemy -= allyDamage;
-            ally -= opponentDamage;
+            if (enemy.isDodging == false) {
+                enemy -= allyDamage;
+                ally -= opponentDamage;
+            }
         }
         else if (userChoice == 3) {
             ally.catchPokemon(enemy);
@@ -63,14 +70,18 @@ int main() {
         cout << "_____________________________________________" << endl;
         cout << "You attacked the opponent for " << allyDamage << " damage." << endl;
 
+
         // Check if opponent fainted
         if (enemy.hp <= 0) {
             cout << "Opponent's Pokemon fainted! You win!" << endl;
             break;
         }
-
         // Opponent's turn
-        cout << "Opponent attacked you for " << opponentDamage << " damage." << endl;
+        if(enemy.isDodging == false)
+            cout << enemy.name <<  " attacked you for " << opponentDamage << " damage." << endl;
+        else
+            cout << enemy.name << " dodged " << ally.name << "'s attack!" << endl;
+
 
         // Check if ally fainted
         if (ally.hp <= 0) {
@@ -97,34 +108,33 @@ int getUserAttackChoice() {
     bool selected = false;
     while (!selected) {
         system("cls"); // Clear screen
-        
-        ally.displayPokemon(ally, enemy);
 
+        ally.displayPokemon(ally, enemy);
 
         cout << "Choose your attack:" << endl;
         // Highlight the selected choice
         if (choice == 1) {
             cout << "-> Normal Attack" << endl;
             cout << "   Special Attack (Double Damage)" << endl;
-            cout << "   Catch " << "(" << enemy.winRate_catch(enemy) * 100 << "% Success Rate)" << endl;
+            cout << "   Catch " << "(" << enemy.winRate_catch() * 100 << "% Success Rate)" << endl;
             cout << "   Run" << endl;
         }
         else if (choice == 2) {
             cout << "   Normal Attack" << endl;
             cout << "-> Special Attack (Double Damage)" << endl;
-            cout << "   Catch " << "(" << enemy.winRate_catch(enemy) * 100 << "% Success Rate)" << endl;
+            cout << "   Catch " << "(" << enemy.winRate_catch() * 100 << "% Success Rate)" << endl;
             cout << "   Run" << endl;
         }
         else if (choice == 3) {
             cout << "   Normal Attack" << endl;
             cout << "   Special Attack (Double Damage)" << endl;
-            cout << "-> Catch " << "(" << enemy.winRate_catch(enemy) * 100 << "% Success Rate)" << endl;
-            cout << "   Run"<< endl;
+            cout << "-> Catch " << "(" << enemy.winRate_catch() * 100 << "% Success Rate)" << endl;
+            cout << "   Run" << endl;
         }
         else if (choice == 4) {
             cout << "   Normal Attack" << endl;
             cout << "   Special Attack (Double Damage)" << endl;
-            cout << "   Catch " << "(" << enemy.winRate_catch(enemy) * 100 << "% Success Rate)" << endl;
+            cout << "   Catch " << "(" << enemy.winRate_catch() * 100 << "% Success Rate)" << endl;
             cout << "-> Run" << endl;
         }
         // Wait for arrow key input
