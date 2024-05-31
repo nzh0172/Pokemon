@@ -10,18 +10,9 @@ using namespace std;
 
 //test
 
-int getUserAttackChoice();
+int getUserAttackChoice(Pokemon&);
 
-// Function to set cursor position
-void gotoxy(int x, int y) {
-    COORD coord;
-    coord.X = x;
-    coord.Y = y;
-    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
-}
 // Create two Pokemon
-
-
 Pokemon ally;
 Pokemon enemy;
 
@@ -33,18 +24,15 @@ int main() {
     ally.initializePokemon("Pikachu", 100, 20);
     enemy.initializePokemon("Charmander", 100, 15);
 
-    
-
     // Display initial Pokemon stats
     ally.displayPokemon(ally, enemy);
 
     // Start the battle
     while (ally.hp > 0 && enemy.hp > 0) {
         // ally's turn
-        int userChoice = getUserAttackChoice();
+        int userChoice = getUserAttackChoice(enemy);
         int allyDamage = 0;
         int opponentDamage = enemy.calculateDamage(enemy.attack);
-        
 
         if (userChoice == 1) {
             allyDamage = ally.calculateDamage(ally.attack);
@@ -102,7 +90,7 @@ int main() {
 
 
 // Function to get user's attack choice using arrow keys
-int getUserAttackChoice() {
+int getUserAttackChoice(Pokemon& enemy) {
     int choice = 1; // Default choice
     int key;
     bool selected = false;
@@ -117,25 +105,25 @@ int getUserAttackChoice() {
         if (choice == 1) {
             cout << "-> Normal Attack" << endl;
             cout << "   Special Attack (Double Damage)" << endl;
-            cout << "   Catch" << endl;
+            cout << "   Catch " << "(" << enemy.winRate_catch(enemy) * 100 << "% Success Rate)" << endl;
             cout << "   Run" << endl;
         }
         else if (choice == 2) {
             cout << "   Normal Attack" << endl;
             cout << "-> Special Attack (Double Damage)" << endl;
-            cout << "   Catch" << endl;
+            cout << "   Catch " << "(" << enemy.winRate_catch(enemy) * 100 << "% Success Rate)" << endl;
             cout << "   Run" << endl;
         }
         else if (choice == 3) {
             cout << "   Normal Attack" << endl;
             cout << "   Special Attack (Double Damage)" << endl;
-            cout << "-> Catch" << endl;
+            cout << "-> Catch " << "(" << enemy.winRate_catch(enemy) * 100 << "% Success Rate)" << endl;
             cout << "   Run"<< endl;
         }
         else if (choice == 4) {
             cout << "   Normal Attack" << endl;
             cout << "   Special Attack (Double Damage)" << endl;
-            cout << "   Catch" << endl;
+            cout << "   Catch " << "(" << enemy.winRate_catch(enemy) * 100 << "% Success Rate)" << endl;
             cout << "-> Run" << endl;
         }
         // Wait for arrow key input
