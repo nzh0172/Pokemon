@@ -20,7 +20,7 @@ int main() {
 
     // Initialize Pokemon
     ally.initializePokemon("Pikachu", 100, 20);
-    enemy.initializePokemon("Charmander", 100, 22);
+    enemy.initializePokemon("Mommy Charmander", 100, 22);
 
     // Display initial Pokemon stats
     ally.displayPokemon(ally, enemy);
@@ -33,8 +33,19 @@ int main() {
         int opponentDamage = enemy.calculateDamage(enemy.attack);
 
         int enemyDodge = randomInRange(0, 20);
-        if (enemyDodge > 10)
+
+        int* p = new int[3];
+        int i = 0;
+
+        if (enemyDodge > 10) {
             enemy.isDodging = true;
+            p[i] = enemy.isDodging;
+            for (int j = 0; j < 3; j++) {
+                if (p[j] == 0) {
+                    cout << "3 times now" << endl;
+                }
+            }
+        }
         else
             enemy.isDodging = false;
 
