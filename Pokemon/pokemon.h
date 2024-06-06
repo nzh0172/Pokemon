@@ -7,11 +7,16 @@
 #include <string>
 
 // Define a struct for a Pokemon
-class Pokemon {
+class baseStats{
 public:
     std::string name; //need to put std::, using namespace std is bad practice idk
     int hp;
     int attack;
+};
+
+class Pokemon: public baseStats {
+public:
+
     bool isCaptured;
     bool isDodging;
     double winRate;
